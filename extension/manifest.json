@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Web Moderator",
+  "version": "1.0.0",
+  "description": "Web media content moderator",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "/icons/icon-16.png",
+      "32": "/icons/icon-32.png",
+      "48": "/icons/icon-48.png",
+      "128": "/icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "/icons/icon-16.png",
+    "32": "/icons/icon-32.png",
+    "48": "/icons/icon-48.png",
+    "128": "/icons/icon-128.png"
+  },
+  "author": "geduramc",
+  "host_permissions": [
+    "https://developer.chrome.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "main.js"
+      ],
+      "css": [
+        "style.css"
+      ]
+    }
+  ]
+}
