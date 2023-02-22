@@ -8,6 +8,6 @@
     "build": "vue-tsc && vite build"
   },
   "dependencies": {
-    "vue": "^3.2.45"
+    "vue": "3.2.45"
   }
 }
