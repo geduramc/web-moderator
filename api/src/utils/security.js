@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken')
-const generalResponse = require('../utils/generalResponse')
-const crypto = require('crypto')
+import jwt from 'jsonwebtoken'
+import { generalResponse } from '../utils/generalResponse.js'
+import crypto from 'crypto'
 
 const auth = ({ name, user, key }) => {
   return new Promise((resolve, reject) => {
@@ -37,4 +37,4 @@ const sign = () => {
   }
 }
 
-module.exports = { auth, verify, sign }
+export const security = { auth, verify, sign }

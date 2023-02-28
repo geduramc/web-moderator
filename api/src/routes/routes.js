@@ -1,15 +1,12 @@
-const generalResponse = require('../utils/generalResponse')
-const pkg = require('../../package.json')
-const security = require('../utils/security')
-const service = require('../services/service')
+import { generalResponse } from '../utils/generalResponse.js'
+import { security } from '../utils/security.js'
+import { service } from '../services/service.js'
 
-const router = (app) => {
+export function router (app) {
   app.get('/', (_, res) => {
     res.json(generalResponse.ok({
-      name: pkg.name,
-      author: pkg.author,
-      description: pkg.description,
-      version: pkg.version
+      name: 'web-moderator-api',
+      author: 'geduram',
     }))
   })
 
@@ -40,5 +37,3 @@ const router = (app) => {
     res.status(404).send(generalResponse.error('Error, 404 Not Found'))
   })
 }
-
-module.exports = router

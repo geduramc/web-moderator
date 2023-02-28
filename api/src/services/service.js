@@ -1,4 +1,5 @@
-const security = require('../utils/security')
+import fetch from "node-fetch"
+import { security } from '../utils/security.js'
 
 const moderation = ({ fileUrl }) => {
   const sign = security.sign()
@@ -17,4 +18,4 @@ const moderation = ({ fileUrl }) => {
   })
 }
 
-module.exports = { moderation }
+export const service = { moderation }

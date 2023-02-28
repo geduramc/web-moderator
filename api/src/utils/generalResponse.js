@@ -22,4 +22,4 @@ const error = (_msg) => {
   }
 }
 
-module.exports = { ok, info, error }
+export const generalResponse = { ok, info, error }

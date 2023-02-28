@@ -1,12 +1,10 @@
-const express = require('express')
-const dotenv = require('dotenv')
-const morgan = require('morgan')
-const cors = require('cors')
-// const mongoose = require('mongoose')
-const routes = require('./routes/routes')
+import express from 'express'
+import dotenv from 'dotenv'
+import morgan from 'morgan'
+import cors from 'cors'
+import { router } from './routes/routes.js'
 
-require('dotenv').config()
-
+dotenv.config()
 const app = express()
 
 app.set('port', (process.env.PORT != null) ? process.env.PORT : 3000)
@@ -17,7 +15,7 @@ app.use(express.json())
 app.use(cors())
 
 //routes
-routes(app)
+router(app)
 
 app.listen(app.get('port'), () => {
   console.log(`[port: ${app.get('port')}] server running...`)
