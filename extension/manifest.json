@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Web Moderator",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Web media content moderator",
   "action": {
     "default_popup": "popup/popup.html",
@@ -32,7 +32,8 @@
       ],
       "css": [
         "style.css"
-      ]
+      ],
+      "run_at": "document_start"
     }
   ]
 }
