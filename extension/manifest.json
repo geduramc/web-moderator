@@ -19,9 +19,6 @@
     "128": "/icons/icon-128.png"
   },
   "author": "geduramc",
-  "host_permissions": [
-    "https://developer.chrome.com/*"
-  ],
   "content_scripts": [
     {
       "matches": [
