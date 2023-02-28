@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "app:dev": "npm run dev --workspace=app",
-    "app:build": "npm run build --workspace=app"
+    "app:build": "npm run build --workspace=app",
+    "api:dev": "npm start --workspace=api"
   },
   "repository": {
     "type": "git",
