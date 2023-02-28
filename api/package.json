@@ -1,0 +1,18 @@
+{
+  "name": "web-moderator-api",
+  "version": "1.0.0",
+  "description": "web-moderator-api",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "geduramc",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}
