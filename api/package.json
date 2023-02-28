@@ -2,6 +2,7 @@
   "name": "web-moderator-api",
   "version": "1.0.0",
   "description": "web-moderator-api",
+  "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
@@ -12,7 +13,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.0"
+    "jsonwebtoken": "^9.0.0",
+    "node-fetch": "^3.3.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
