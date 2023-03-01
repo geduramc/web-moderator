@@ -1,6 +1,6 @@
 {
   "name": "web-moderator-api",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "web-moderator-api",
   "type": "module",
   "scripts": {
@@ -10,14 +10,14 @@
   "author": "geduramc",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.0",
-    "node-fetch": "^3.3.0"
+    "cors": "2.8.5",
+    "dotenv": "16.0.3",
+    "express": "4.18.2",
+    "jsonwebtoken": "9.0.0",
+    "node-fetch": "3.3.0"
   },
   "devDependencies": {
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.20"
+    "morgan": "1.10.0",
+    "nodemon": "2.0.20"
   }
 }
