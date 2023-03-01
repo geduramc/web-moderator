@@ -6,7 +6,7 @@ export function router (app) {
   app.get('/', (_, res) => {
     res.json(generalResponse.ok({
       name: 'web-moderator-api',
-      author: 'geduram',
+      author: 'geduramc',
     }))
   })
 
