@@ -664,6 +664,14 @@ li {
   margin-bottom: 1rem;
 }
 
+blockquote {
+  border-left: 0.35rem solid #FFFFFF26;
+}
+
+a, a:visited {
+  color: #0090ffd9;
+}
+
 .demo-video {
   text-align: center;
 }
