@@ -4,17 +4,19 @@ const IMG_SELECTOR = "img, [style*='background-image']"
 const WEB_MODERATOR_API = 'https://moderator.geduramc.com'
 const CONFIG_MANAGER_API = 'https://config.geduramc.com'
 const CLOUDINARY_URL = 'https://res.cloudinary.com'
-const CLOUDINARY_NAME = 'demo'
+const CLOUDINARY_NAME = 'geduramc'
 const LOADING_IMG = 'https://res.cloudinary.com/geduramc/image/upload/s--zDlpWYnP--/v1677632961/web-moderator-loading.png'
 const WEB_MODERATOR_LOGO = 'https://res.cloudinary.com/geduramc/image/upload/s--GBJLJCnP--/v1677591293/web-moderator-logo.png'
 const STORAGE_ACTIVE_NAME = 'web-moderator-active'
 const MODERATION_FLAG = 'geduramc/web-moderator/moderation-enable'
+const IGNORE_IMAGES = 'geduramc/web-moderator/ignore-images'
 
 let imgElements = null
 let bgImgElements = null
 let ctrlInterval = null
 let imagesObj = []
 let moderationFlag = false
+let ignore = null
 
 const setLoader = () => {
   const lastElement = document.getElementsByTagName('body')[0].firstElementChild
@@ -40,18 +42,37 @@ const pixelateImg = (elements) => {
     if (elements.length > 0) {
       elements.forEach(el => {
         const originUrl = el.src
+        const pixelUrl = `${CLOUDINARY_URL}/${CLOUDINARY_NAME}/image/fetch/e_pixelate/${originUrl}`
+        let status = 'rejected'
 
-        // el.src = LOADING_IMG
-        if (originUrl && originUrl.indexOf(CLOUDINARY_URL) < 0) {
+        if (ignore.split(',').filter(x => x.replaceAll('"', '') === el.src).length > 0) return
+        if (imagesObj.filter(x => x.url === el.src && x.status === 'approved').length > 0) return
+        if (imagesObj.filter(x => x.url === el.src && x.status === 'rejected').length > 0) el.src = pixelUrl
+
+        if (el.src && el.src.indexOf(CLOUDINARY_URL) < 0) {
           const pixelUrl = `${CLOUDINARY_URL}/${CLOUDINARY_NAME}/image/fetch/e_pixelate/${originUrl}`
-          el.setAttribute('src', LOADING_IMG)
+          el.src = LOADING_IMG
 
-          imagesObj.push({
-            element: el,
-            originUrl: originUrl,
-            status: false,
-            valid: false
-          })
+          if (moderationFlag) {
+            moderation(originUrl)
+              .then(res => res.json())
+              .then(({ data }) => {
+                if (data.moderation && data.moderation[0].hasOwnProperty('status') && data.moderation[0].status == 'rejected')
+                  el.src = pixelUrl
+                else if (data.moderation && data.moderation[0].hasOwnProperty('status') && data.moderation[0].status == 'approved') {
+                  el.src = originUrl
+                  status = 'approved'
+                }
+
+                if (imagesObj.filter(x => x.url === el.src).length <= 0) imagesObj.push({
+                  url: originUrl,
+                  status: status
+                })
+              })
+              .catch(err => {
+                console.error(err)
+              })
+          }
         }
       })
     }
@@ -89,52 +110,33 @@ const validateImg = () => {
   })
 }
 
-const gfetch = ({ method = 'GET', url, headers = null, body }) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const xhr = new XMLHttpRequest()
-      xhr.open(method, url, true)
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-
-      if (headers != null && headers.length > 0) {
-        headers.forEach(item => {
-          const header = Object.getOwnPropertyNames(item)[0]
-          xhr.setRequestHeader(header, item[header])
-        })
-      }
-
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) resolve(JSON.parse(xhr.responseText))
-      }
-      xhr.send(JSON.stringify(body))
-    }
-    catch (err) { reject(err) }
-  })
-}
-
 const auth = () => {
-  return gfetch({
+  return fetch(`${WEB_MODERATOR_API}/auth`, {
     method: 'POST',
-    url: 'https://web-moderator-api.up.railway.app/auth',
-    body: {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
       name: 'web-moderator',
       user: 'geduramc',
       key: 'd2ViLW1vZGVyYXRvci1nZWR1cmFtYw=='
-    }
+    })
   })
 }
 
 const moderation = async (fileUrl) => {
-  const token = await auth()
-  return gfetch({
+  let res = await auth()
+  res = await res.json()
+
+  return fetch(`${WEB_MODERATOR_API}/moderation`, {
     method: 'POST',
-    url: `${WEB_MODERATOR_API}/moderation`,
-    headers: [
-      { Authorization: `Bearer ${token.data.token}` }
-    ],
-    body: {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${res.data.token}`
+    },
+    body: JSON.stringify({
       file: fileUrl
-    }
+    })
   })
 }
 
@@ -149,33 +151,34 @@ const toggleStorage = () => {
   location.reload()
 }
 
-const getModerationFlag = async () => {
-  const res = await gfetch({ url: `${CONFIG_MANAGER_API}/name/${MODERATION_FLAG}` })
-  if (res.ok && res.data.length > 0) moderationFlag = (res.data[0].value === 'true') ? true : false
-}
-
 //main
 window.addEventListener('DOMContentLoaded', async (event) => {
   validateStorage()
 
+  // MODERATION_FLAG
+  let res = await fetch(`${CONFIG_MANAGER_API}/name/${MODERATION_FLAG}`)
+  res = await res.json()
+  if (res.ok && res.data.length > 0) moderationFlag = (res.data[0].value === 'true') ? true : false
+
+  res = await fetch(`${CONFIG_MANAGER_API}/name/${IGNORE_IMAGES}`)
+  res = await res.json()
+  if (res.ok && res.data.length > 0) ignore = res.data[0].value
+
   if (localStorage.getItem(STORAGE_ACTIVE_NAME) == 'true') {
-    getModerationFlag()
     setLoader()
 
     setTimeout(() => {
       hideLoader()
     }, 3000)
 
-    if(!moderationFlag) console.log('%c[Web Moderator]: Rekognition AI Moderation API disabled!', 'font-size: 20px; color: #c8cf00;')
+    if (!moderationFlag) console.log('%c[Web Moderator]: Rekognition AI Moderation API disabled!', 'font-size: 20px; color: #c8cf00;')
 
     ctrlInterval = setInterval(() => {
-      imgElements = document.querySelectorAll('img')
+      imgElements = document.querySelectorAll(`img:not([src*='${CLOUDINARY_URL}'])`)
       if (imgElements.length > 0) pixelateImg(Array.from(imgElements))
 
       bgImgElements = document.querySelectorAll("[style*='background-image']")
       if (bgImgElements.length > 0) pixelateBgImg(Array.from(bgImgElements))
-
-      // if(moderationFlag) validateImg()
     }, 100)
   }
 
