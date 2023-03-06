@@ -1,14 +1,14 @@
 'use strict';
 
 const IMG_SELECTOR = "img, [style*='background-image']"
-const WEB_MODERATOR_API = 'https://web-moderator-api.up.railway.app'
+const WEB_MODERATOR_API = 'https://moderator.geduramc.com'
 const CONFIG_MANAGER_API = 'https://config.geduramc.com'
 const CLOUDINARY_URL = 'https://res.cloudinary.com'
 const CLOUDINARY_NAME = 'demo'
 const LOADING_IMG = 'https://res.cloudinary.com/geduramc/image/upload/s--zDlpWYnP--/v1677632961/web-moderator-loading.png'
 const WEB_MODERATOR_LOGO = 'https://res.cloudinary.com/geduramc/image/upload/s--GBJLJCnP--/v1677591293/web-moderator-logo.png'
 const STORAGE_ACTIVE_NAME = 'web-moderator-active'
-const MODERATION_FLAG_URL = 'geduramc/web-moderator/moderation-enable'
+const MODERATION_FLAG = 'geduramc/web-moderator/moderation-enable'
 
 let imgElements = null
 let bgImgElements = null
@@ -80,8 +80,12 @@ const pixelateBgImg = (elements) => {
 }
 
 const validateImg = () => {
-  imagesObj.filter(x => !x.status).forEach(item => {
-    // console.log(item)
+  imagesObj.filter(x => !x.status).forEach(async item => {
+    console.log(item.element)
+    const res = await moderation('')
+    console.log(res)
+    item.status = true
+    debugger
   })
 }
 
@@ -145,13 +149,9 @@ const toggleStorage = () => {
   location.reload()
 }
 
-const getModerationFlag = () => {
-  gfetch({ url: `${CONFIG_MANAGER_API}/name/${MODERATION_FLAG_URL}` })
-    .then(res => {
-      if (res.ok && res.data.length > 0) {
-        moderationFlag = (res.data[0].value === 'true') ? true : false
-      }
-    })
+const getModerationFlag = async () => {
+  const res = await gfetch({ url: `${CONFIG_MANAGER_API}/name/${MODERATION_FLAG}` })
+  if (res.ok && res.data.length > 0) moderationFlag = (res.data[0].value === 'true') ? true : false
 }
 
 //main
@@ -162,11 +162,11 @@ window.addEventListener('DOMContentLoaded', async (event) => {
     getModerationFlag()
     setLoader()
 
-    console.log(moderationFlag)
-
     setTimeout(() => {
       hideLoader()
     }, 3000)
+
+    if(!moderationFlag) console.log('%c[Web Moderator]: Rekognition AI Moderation API disabled!', 'font-size: 20px; color: #c8cf00;')
 
     ctrlInterval = setInterval(() => {
       imgElements = document.querySelectorAll('img')
@@ -175,7 +175,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
       bgImgElements = document.querySelectorAll("[style*='background-image']")
       if (bgImgElements.length > 0) pixelateBgImg(Array.from(bgImgElements))
 
-      validateImg()
+      // if(moderationFlag) validateImg()
     }, 100)
   }
 
