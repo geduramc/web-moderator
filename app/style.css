@@ -703,3 +703,17 @@ span.features {
   width: 200px;
   height: 60px;
 }
+
+.cloudinary-logo {
+  width: 80px;
+}
+
+.separator {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.geduramc {
+  color: #FFF !important;
+  text-decoration: auto;
+}
