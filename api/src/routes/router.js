@@ -15,6 +15,8 @@ export function router (app) {
 
   app.use('/icons', express.static('../extension/icons'))
 
+  app.use('/cdn', express.static('../app/assets'))
+
   app.post('/auth', (req, res) => {
     const { name, user, key } = req.body
     security.auth({ name, user, key})
