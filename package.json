@@ -3,12 +3,9 @@
   "version": "0.0.1",
   "description": "web-moderator chrome extension",
   "workspaces": [
-    "api",
-    "app"
+    "api"
   ],
   "scripts": {
-    "app:dev": "npm run dev --workspace=app",
-    "app:build": "npm run build --workspace=app",
     "api:dev": "npm run dev --workspace=api",
     "api:start": "npm start --workspace=api",
     "start": "npm run api:start"
