@@ -7,3 +7,6 @@ Chrome extension to moderate multimedia web content
     <img src="https://res.cloudinary.com/geduramc/image/upload/s--WqedvgRp--/v1678133056/web-moderator-captures/screen_1.png" />
   </a>
 </p>
+
+<hr>
+<p align="center">By @geduramc ☕</p>
