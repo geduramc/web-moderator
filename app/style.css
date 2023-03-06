@@ -627,6 +627,26 @@ progress:indeterminate::-moz-progress-bar {
 }
 /* Simple.css */
 
+th {
+  font-weight: 200;
+}
+
+b {
+  font-weight: 500;
+}
+
+section {
+  margin: 1rem 0;
+  padding: 0px;
+}
+
+button {
+  background-color: #6E6E6E;
+  height: 25px;
+  display: inline-flex;
+  align-items: center; 
+}
+
 .features {
   display: grid;
   justify-content: center;
@@ -658,19 +678,7 @@ span.features {
   place-items: center;
 }
 
-th {
-  font-weight: 200;
-}
-
-b {
-  font-weight: 500;
-}
-
-section {
-  margin: 1rem 0;
-  padding: 0px;
-}
-
-button {
-  background-color: #6E6E6E;
+.img-enable {
+  width: 200px;
+  height: 60px;
 }
