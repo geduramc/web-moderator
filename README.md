@@ -8,7 +8,7 @@ Chrome extension to moderate multimedia web content
   </a>
 </p>
 
-> Rekognition AI Moderation is likely disabled at times, as the API has a monthly consumption limit.
+> Rekognition AI Moderation is likely disabled sometimes, this is because the API has a monthly request limit.
 
 <p align="center">
   <img src="https://res.cloudinary.com/geduramc/image/upload/s--0EJgLKCA--/v1678133890/web-moderator-captures/screen_2.png" />
