@@ -1,14 +1,19 @@
+import express from 'express'
 import { generalResponse } from '../utils/generalResponse.js'
 import { security } from '../utils/security.js'
 import { service } from '../services/service.js'
 
 export function router (app) {
-  app.get('/', (_, res) => {
-    res.json(generalResponse.ok({
-      name: 'web-moderator-api',
-      author: 'geduramc',
-    }))
-  })
+  // app.get('/', (_, res) => {
+  //   res.json(generalResponse.ok({
+  //     name: 'web-moderator-api',
+  //     author: 'geduramc',
+  //   }))
+  // })
+
+  app.use('/', express.static('../app'))
+
+  app.use('/icons', express.static('../extension/icons'))
 
   app.post('/auth', (req, res) => {
     const { name, user, key } = req.body

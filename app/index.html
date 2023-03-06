@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
+  <title>Web Moderator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Web Moderator</h1>
+    <p>Chrome extension to moderate multimedia web content</p>
+  </header>
+  <main>
+    <div class="features">
+      <table>
+        <thead>
+          <tr>
+            <th><b>Element</b></th>
+            <th>img</th>
+            <th>background-img</th>
+            <th>video</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Status</b></td>
+            <td><span class="features success">Supported</span></td>
+            <td><span class="features warning">Partial support</span></td>
+            <td><span class="features danger">Not supported</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <section>
+      <h3>Demo</h3>
+      <ol>
+        <li>Install extension</li>
+        <li>Enable the extension</li>
+        <img src="./images/enable-extension.webp" alt="enable extension">
+        <li>Load demo images</li>
+        <button title="load demo">Demo</button>
+      </ol>
+      <div class="demo-images"></div>
+    </section>
+  </main>
+  <footer>
+    <p>By @geduramc &#9749;</p>
+  </footer>
+</body>
+<script>
+  ((window, document) => {
+    const CONFIG_MANAGER_API = 'https://config.geduramc.com'
+    const DEMO_IMG = 'geduramc/web-moderator/demo-images'
+
+    const getDemoImgs = () => {
+      const div = document.getElementsByClassName('demo-images')[0]
+      fetch(`${CONFIG_MANAGER_API}/name/${DEMO_IMG}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.ok && data.data.length > 0) {
+            data.data[0].value.split(',').forEach(item => {
+              const img = document.createElement('img')
+              img.alt = 'image-demo'
+              img.src = item.replaceAll('"', '')
+              img.style.width = '250px'
+              img.style.height = '250px'
+
+              div.appendChild(img)
+            })
+          }
+        })
+    }
+
+    window.addEventListener('DOMContentLoaded', async (event) => {
+      const btn = document.getElementsByTagName('button')[0]
+      btn.addEventListener('click', () => {
+        getDemoImgs()
+      })
+    })
+  })(window, document)
+</script>
+
+</html>
