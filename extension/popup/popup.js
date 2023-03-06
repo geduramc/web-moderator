@@ -1,21 +1,26 @@
-window.addEventListener('DOMContentLoaded', async (event) => {
-  const toggle = document.querySelector('input[type*="checkbox"]')
-
+const toggleInit = (el) => {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-    try{
-      const activeTab = tabs[0];
-      chrome.tabs.sendMessage(activeTab.id, { "message": "toggleInit" }, (response) => {
-        toggle.checked = (response == 'true') ? true : false
-      })
-    }catch(err){ location.reload() }
+    const activeTab = tabs[0];
+    chrome.tabs.sendMessage(activeTab.id, { "message": "toggleInit" }, (response) => {
+      el.checked = (response == 'true') ? true : false
+    })
   })
+}
 
-  toggle.addEventListener('change', () => {
-    try{
-      chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-        const activeTab = tabs[0];
-        chrome.tabs.sendMessage(activeTab.id, { "message": "toggleChange" })
-      })
-    }catch(err){ location.reload() }
+const toggleChange = () => {
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+    const activeTab = tabs[0];
+    chrome.tabs.sendMessage(activeTab.id, { "message": "toggleChange" })
   })
+}
+
+window.addEventListener('DOMContentLoaded', async (event) => {
+  try {
+    const toggle = document.querySelector('input[type*="checkbox"]')
+    toggleInit(toggle)
+    
+    toggle.addEventListener('change', () => {
+      toggleChange()
+    })
+  } catch (err) { location.reload() }
 })
