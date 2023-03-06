@@ -647,6 +647,27 @@ button {
   align-items: center; 
 }
 
+mark {
+  background-color: #EBFF0026;
+  color: #FFF;
+}
+
+ol {
+  font-size: 14px;
+}
+
+video {
+  width: 80%;
+}
+
+li {
+  margin-bottom: 1rem;
+}
+
+.demo-video {
+  text-align: center;
+}
+
 .features {
   display: grid;
   justify-content: center;
