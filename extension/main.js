@@ -19,7 +19,7 @@ let moderationFlag = false
 let ignore = null
 
 const setLoader = () => {
-  const lastElement = document.getElementsByTagName('body')[0].firstElementChild
+  const lastElement = document.body.firstElementChild
 
   const overlay = document.createElement('div')
   overlay.classList.add('g-overlay')

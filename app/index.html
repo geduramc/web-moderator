@@ -38,29 +38,34 @@
       </table>
     </div>
     <section>
-      <h3>Demo</h3>
-      <div class="demo-video">
-        <video width="320" height="240" autoplay controls>
-          <source src="./assets/demo-video.ogg" type="video/ogg">
-          Your browser does not support the video tag.
-        </video>
+      <div class="content">
+        <div class="install">
+          <ol>
+            <li>
+              Install extension
+              <ul>
+                <li><a href="https://chrome.google.com/webstore/detail/web-moderator/cecdiljnpmaakebhflnemjanpdpippma?hl=es" target="_blank">Chrome Web Store</a></li>
+              </ul>
+            </li>
+            <li>Enable the extension</li>
+            <img class="img-enable" src="./assets/enable-extension.webp" alt="enable-extension">
+            <li><button title="load demo">Load demo images</button></li>
+          </ol>
+        </div>
+        <div class="demo-video">
+          <video width="320" height="240" autoplay controls>
+            <source src="./assets/demo-video.ogg" type="video/ogg">
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
-      <ol>
-        <li>
-          Install extension
-          <ul>
-            <li>Chrome Web Store publish <mark>Pending</mark></li>
-          </ul>
-        </li>
-        <li>Enable the extension</li>
-        <img class="img-enable" src="./assets/enable-extension.webp" alt="enable-extension">
-        <li><button title="load demo">Load demo images</button></li>
-      </ol>
-      <div class="demo-images"></div>
       <blockquote>
         <p>Rekognition AI Moderation is likely disabled sometimes, this is because the API has a monthly request limit.</p>
-        <img src="https://res.cloudinary.com/geduramc/image/upload/s--0EJgLKCA--/v1678133890/web-moderator-captures/screen_2.png" alt="moderator-enable">
+        <img
+          src="https://res.cloudinary.com/geduramc/image/upload/s--0EJgLKCA--/v1678133890/web-moderator-captures/screen_2.png"
+          alt="moderator-enable">
       </blockquote>
+      <div class="demo-images"></div>
     </section>
   </main>
   <footer>
@@ -81,7 +86,7 @@
     const getDemoImgs = () => {
       const div = document.getElementsByClassName('demo-images')[0]
       div.innerHTML = ''
-      
+
       fetch(`${CONFIG_MANAGER_API}/name/${DEMO_IMG}`)
         .then(res => res.json())
         .then(data => {

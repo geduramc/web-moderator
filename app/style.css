@@ -714,6 +714,7 @@ span.features {
 
 .cloudinary-logo {
   width: 80px;
+  filter: invert(0.5);
 }
 
 .separator {
@@ -724,4 +725,12 @@ span.features {
 .geduramc {
   color: #FFF !important;
   text-decoration: auto;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 2rem;
+  justify-content: center;
+  align-items: center;
 }
