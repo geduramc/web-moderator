@@ -1,13 +1,13 @@
 import express from 'express'
+import path from 'node:path'
 import { generalResponse } from '../utils/generalResponse.js'
 import { security } from '../utils/security.js'
 import { service } from '../services/service.js'
 
 export function router (app) {
-
-  app.use('/', express.static('../app'))
-
-  app.use('/icons', express.static('../extension/icons'))
+  app.use('/', express.static(path.resolve('./app')))
+  
+  app.use('/icons', express.static(path.resolve('./extension/icons')))
 
   app.post('/auth', (req, res) => {
     const { name, user, key } = req.body
