@@ -15,4 +15,4 @@ Chrome extension to moderate multimedia web content
 </p>
 
 <hr>
-<p align="center">By @geduramc ☕</p>
+<p align="center">By @geduramc</p>
